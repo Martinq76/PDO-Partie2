@@ -1,0 +1,6 @@
+Options +FollowSymlinks
+RewriteEngine On
+RewriteRule ^accueil$ index.php?page=accueil [L]
+RewriteRule ^ajout-patient$ index.php?page=ajout-patient [L]
+RewriteRule ^liste-patients$ index.php?page=liste-patients [L]
+RewriteRule ^profil-patients$ index.php?page=profil-patients [L]

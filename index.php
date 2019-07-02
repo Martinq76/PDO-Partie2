@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
-    <title>PDO Partie2</title>
+    <title>PDO Partie 2</title>
 </head>
 
 <body>
@@ -17,13 +17,27 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
-                <a class="nav-item nav-link active" href="index.php">Accueil <span class="sr-only">(current)</span></a>
-                <a class="nav-item nav-link" href="ajout-patient.php">Nouveau patient</a>
-                <a class="nav-item nav-link" href="liste-patients.php">Liste patients</a>
+                <a class="nav-item nav-link active" href="accueil">Accueil <span class="sr-only">(current)</span></a>
+                <a class="nav-item nav-link" href="ajout-patient">Nouveau patient</a>
+                <a class="nav-item nav-link" href="liste-patients">Liste patients</a>
+                <a class="nav-item nav-link" href="profil-patients">Profil patients</a>
             </div>
         </div>
     </nav>
 
+    <?php
+    $bdd = new PDO('mysql:host=localhost;dbname=hospitalE2N;charset=utf8', 'martin76', 'aynwxe3040$');
+
+    if($_GET['page'] == 'accueil'):?>
+        <h1>Bienvenue !</h1><?php
+    elseif ($_GET['page'] == 'ajout-patient'):
+        include 'ajout-patient.php';
+    elseif($_GET['page'] == 'liste-patients'):
+        include 'liste-patients.php';
+    elseif($_GET['page'] == 'profil-patients'):
+        include 'profil-patients.php';
+    endif;
+    ?>
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">

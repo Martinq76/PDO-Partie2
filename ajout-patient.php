@@ -1,9 +1,4 @@
-<?php
-$bdd = new PDO('mysql:host=localhost;dbname=hospitalE2N;charset=utf8', 'martin76', 'aynwxe3040$');
-
-?>
-
-<form method="get" action="">
+<form method="post" action="">
   <div class="form-group">
     <label for="lastName">Nom</label>
     <input type="text" class="form-control" name="lastName" id="lastName" placeholder="Entrez un nom" />
@@ -29,7 +24,7 @@ $bdd = new PDO('mysql:host=localhost;dbname=hospitalE2N;charset=utf8', 'martin76
 
 <?php
 $req = $bdd->prepare('INSERT INTO `patients` (`lastName`, `firstName`, `birthDate`, `phone`, `mail`) VALUES (?, ?, ?, ?, ?)');
-$req->execute(array($_GET['lastName'], $_GET['firstName'], $_GET['birthDate'], $_GET['phone'], $_GET['mail']));
+$req->execute(array($_POST['lastName'], $_POST['firstName'], $_POST['birthDate'], $_POST['phone'], $_POST['mail']));
 ?>
 
 <a href="liste-patients.php">Voir la liste des patients</a>

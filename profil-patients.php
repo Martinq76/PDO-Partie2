@@ -1,6 +1,4 @@
 <?php
-$bdd = new PDO('mysql:host=localhost;dbname=hospitalE2N;charset=utf8', 'martin76', base64_decode('YXlud3hlMzA0MCQ='));
-
 $response = $bdd->query('SELECT `id`, `lastname`, `firstname` FROM `patients` ORDER BY `lastname`');?>
 
 <form method="get" action="">
@@ -9,7 +7,6 @@ $response = $bdd->query('SELECT `id`, `lastname`, `firstname` FROM `patients` OR
         <option value="" disabled selected>Liste patients</option>
 
 <?php
-
 while($donnees = $response->fetch()):?>
     
         <option value="<?= htmlspecialchars($donnees['id']) ?>"><?= htmlspecialchars($donnees['lastname']).' '.htmlspecialchars($donnees['firstname']) ?></option>
@@ -23,11 +20,8 @@ $response->closeCursor();?>
 </form>
 <?php
 $requete = $bdd->prepare('SELECT * FROM `patients` WHERE `id` = :id');
-
 $requete->bindValue(':id', $_GET['selectPatient'], PDO::PARAM_STR);
-
 $requete->execute();
-
 if ($donnees = $requete->fetch()):?>
     <p><strong>Nom: </strong><?= $donnees['lastname'] ?></p>
     <p><strong>Prénom: </strong><?= $donnees['firstname'] ?></p>
@@ -39,4 +33,4 @@ if ($donnees = $requete->fetch()):?>
 endif;
 ?>
 
-<p><a href="index.php">Revenir à l'accueil</a></p>
+<p><a href="accueil">Revenir à l'accueil</a></p>
