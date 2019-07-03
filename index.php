@@ -3,6 +3,7 @@
 
 <head>
     <meta charset="utf-8" />
+    <link rel="stylesheet" href="style.css" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
     <title>PDO Partie 2</title>
@@ -21,6 +22,8 @@
                 <a class="nav-item nav-link" href="ajout-patient">Nouveau patient</a>
                 <a class="nav-item nav-link" href="liste-patients">Liste patients</a>
                 <a class="nav-item nav-link" href="profil-patients">Profil patients</a>
+                <a class="nav-item nav-link" href="ajout-rendezvous">Nouveau rendez-vous</a>
+                <a class="nav-item nav-link" href="liste-rendezvous">Liste rendez-vous</a>
             </div>
         </div>
     </nav>
@@ -36,6 +39,10 @@
         include 'liste-patients.php';
     elseif($_GET['page'] == 'profil-patients'):
         include 'profil-patients.php';
+    elseif($_GET['page'] == 'ajout-rendezvous'):
+        include 'ajout-rendezvous.php';
+    elseif($_GET['page'] == 'liste-rendezvous'):
+        include 'liste-rendezvous.php';
     endif;
     ?>
 
