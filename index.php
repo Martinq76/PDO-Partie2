@@ -9,7 +9,7 @@
     <title>PDO Partie 2</title>
 </head>
 
-<body>
+<body background="img/Médecine.jpg">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <a class="navbar-brand" href="#">Navbar</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
@@ -23,7 +23,7 @@
                 <a class="nav-item nav-link" href="liste-patients">Liste patients</a>
                 <a class="nav-item nav-link" href="profil-patients">Profil patients</a>
                 <a class="nav-item nav-link" href="ajout-rendezvous">Nouveau rendez-vous</a>
-                <a class="nav-item nav-link" href="liste-rendezvous">Liste rendez-vous</a>
+                <a class="nav-item nav-link" href="liste-rendezvous.php">Liste rendez-vous</a>
             </div>
         </div>
     </nav>
@@ -41,8 +41,6 @@
         include 'profil-patients.php';
     elseif($_GET['page'] == 'ajout-rendezvous'):
         include 'ajout-rendezvous.php';
-    elseif($_GET['page'] == 'liste-rendezvous'):
-        include 'liste-rendezvous.php';
     endif;
     ?>
 

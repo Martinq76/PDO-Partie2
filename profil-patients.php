@@ -38,16 +38,36 @@ endif;
 <html>
     <head>
         <meta charset="utf-8" />
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> 
         <title></title>
     </head>
     <body>
 
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">Navbar</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+            aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+                <a class="nav-item nav-link active" href="accueil">Accueil <span class="sr-only">(current)</span></a>
+                <a class="nav-item nav-link" href="ajout-patient">Nouveau patient</a>
+                <a class="nav-item nav-link" href="liste-patients">Liste patients</a>
+                <a class="nav-item nav-link" href="profil-patients">Profil patients</a>
+                <a class="nav-item nav-link" href="ajout-rendezvous">Nouveau rendez-vous</a>
+                <a class="nav-item nav-link" href="liste-rendezvous.php">Liste rendez-vous</a>
+            </div>
+        </div>
+    </nav>
+
 <?php
     
 
-$response = $bdd->query('SELECT `id`, `lastname`, `firstname` FROM `patients` ORDER BY `lastname`');?>
-
+$response = $bdd->query('SELECT `id`, `lastname`, `firstname` FROM `patients` ORDER BY `lastname`');
+?>
 <form method="get" action="profil-patients.php">
     <label for="selectPatient">Sélectionner un patient</label>
     <select name="selectPatient">
@@ -63,21 +83,34 @@ endwhile;
 $response->closeCursor();?>
 
     </select>
-    <input type="submit" value="Voir les informations" />
+    <input type="submit" class="btn btn-primary" value="Voir les informations" />
 </form>
 <?php
 $requete = $bdd->prepare('SELECT * FROM `patients` WHERE `id` = :id');
-$requete->bindValue(':id', $_GET['selectPatient'], PDO::PARAM_INT);
+$requete->bindValue(':id', htmlspecialchars($_GET['selectPatient']), PDO::PARAM_INT);
 $requete->execute();
-var_dump($_GET['selectPatient']);
 if ($donnees = $requete->fetch()):
 ?>
-    <p><strong>Nom: </strong><?= $donnees['lastname'] ?></p>
-    <p><strong>Prénom: </strong><?= $donnees['firstname'] ?></p>
-    <p><strong>Date de naissance: </strong><?= $donnees['birthdate'] ?></p>
-    <p><strong>Téléphone: </strong><?= $donnees['phone'] ?></p>
-    <p><strong>Adresse mail: </strong><?= $donnees['mail'] ?></p>
+        <p><strong>Nom: </strong><?= htmlspecialchars($donnees['lastname']) ?></p>
+        <p><strong>Prénom: </strong><?= htmlspecialchars($donnees['firstname']) ?></p>
+        <p><strong>Date de naissance: </strong><?= htmlspecialchars($donnees['birthdate']) ?></p>
+        <p><strong>Téléphone: </strong><?= htmlspecialchars($donnees['phone']) ?></p>
+        <p><strong>Adresse mail: </strong><?= htmlspecialchars($donnees['mail']) ?></p>
     
+        <h1>Rendez-vous:</h1>
+    <?php
+    $requeteRdv = $bdd->prepare('SELECT patients.id, appointments.dateHour FROM patients INNER JOIN appointments ON patients.id = appointments.idPatients WHERE patients.id=:id');
+    $requeteRdv->execute(array('id'=>htmlspecialchars($_GET['selectPatient'])));
+    $requeteFetchRdv = $requeteRdv->fetchAll(PDO::FETCH_ASSOC);
+    $i = 1;
+    foreach($requeteFetchRdv as $key => $value):?>
+        <ul>
+            <li><a href="rendezvous.php?id=<?= $value['id'] ?>">Rendez-vous numéro <?= $i.': Le '.$value['dateHour'] ?></a></li>
+        </ul>
+    <?php
+    $i++;
+    endforeach;?>
+
     <h1>Modifier les informations: </h1>
     <form method="post" action="">
         <label for="newLastName">Nom</label>
@@ -93,13 +126,24 @@ if ($donnees = $requete->fetch()):
         
         <button type="submit" class="btn btn-primary">Valider</button>
     </form>
+    
 <?php
 endif;
-
 ?>
     
-  
 <p><a href="accueil">Revenir à l'accueil</a></p>
+
+
+
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
+        </script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+        </script>
         <script src="script.js"></script>
     </body>
 </html>
